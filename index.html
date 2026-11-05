@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Festival Drop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<!-- Fond animé ambiance Mainstage -->
+<div class="bg-lights">
+  <div class="light-orb orb-1"></div>
+  <div class="light-orb orb-2"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- Barre de navigation supérieure -->
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-badge">STAGE EDITION</span>
+    <h1>⚡ FESTIVAL DROP ⚡</h1>
+  </div>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" data-target="tab-drop">🎧 Platine Drop</button>
+    <button class="tab-btn" data-target="tab-collection">
+      🎒 Collection <span id="collection-count" class="nav-counter">0</span>
+    </button>
+    <button class="tab-btn" data-target="tab-mixer">🎛️ Table de Mixage</button>
+    <button class="tab-btn" data-target="tab-rates">📊 Taux & Raretés</button>
+    <button class="tab-btn" data-target="tab-stage">🎪 Mainstage</button>
+  </nav>
+
+  <!-- Portefeuille de Taz (sans le bouton +100) -->
+  <div class="taz-wallet">
+    <span class="taz-icon">▲</span>
+    <span id="taz-balance">500</span>
+    <span class="taz-label">TAZ</span>
+  </div>
+</header>
+
+<main class="app-container">
+  <!-- ONGLET 1 : PLATINE DJ & DROP -->
+  <section id="tab-drop" class="tab-panel active">
+    <!-- LE DISQUAIRE : CHOIX DU VINYLE -->
+    <div class="record-shop">
+      <div class="vinyl-pack active" data-pack="DAILY">
+        <span class="pack-badge free">GRATUIT</span>
+        <h4>🎁 Drop Journalier</h4>
+        <p id="daily-timer">Disponible !</p>
+      </div>
+
+      <div class="vinyl-pack" data-pack="STANDARD">
+        <span class="pack-badge">100 <span class="taz-icon">▲</span></span>
+        <h4>💿 Vinyle Standard</h4>
+        <p>Toutes les raretés</p>
+      </div>
+
+      <div class="vinyl-pack" data-pack="PEAK">
+        <span class="pack-badge">350 <span class="taz-icon">▲</span></span>
+        <h4>🔥 Vinyle Peak-Time</h4>
+        <p>Rare minimum garanti !</p>
+      </div>
+
+      <div class="vinyl-pack" data-pack="TARGET">
+        <span class="pack-badge">200 <span class="taz-icon">▲</span></span>
+        <h4>🎯 Vinyle Ciblé</h4>
+        <select id="target-category-select" class="target-select">
+          <option value="Staff">Cible : Staff</option>
+          <option value="Public">Cible : Public</option>
+          <option value="Objets">Cible : Objets</option>
+          <option value="Camping">Cible : Camping</option>
+          <option value="Festivals">Cible : Festivals</option>
+          <option value="Artistes">Cible : Artistes</option>
+          <option value="Stand">Cible : Stand</option>
+        </select>
+      </div>
+    </div>
+    <div class="drop-layout">
+      <div class="dj-deck">
+        <div class="deck-screws"><span></span><span></span><span></span><span></span></div>
+        
+        <div class="deck-top-bar">
+          <div class="deck-model">PRO-DECK // MK-VIII</div>
+          <div class="vu-meter" id="vu-meter">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="deck-workspace">
+          <div class="platter-ring" id="platter-ring">
+            <div class="strobe-dots"></div>
+            <div id="vinyl" class="vinyl">
+              <div class="vinyl-grooves"></div>
+              <div class="vinyl-shine"></div>
+              <div id="vinyl-label" class="vinyl-label">
+                <span class="label-sub">FESTIVAL</span>
+                <span id="label-text" class="label-main">READY</span>
+                <div class="spindle-hole"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deck-controls-right">
+            <div class="tonearm-assembly">
+              <div class="tonearm-base"></div>
+              <div id="tonearm" class="tonearm">
+                <div class="counterweight"></div>
+                <div class="arm-rod"></div>
+                <div class="headshell"></div>
+              </div>
+            </div>
+
+            <div class="pitch-slider">
+              <div class="pitch-track"></div>
+              <div class="pitch-knob" id="pitch-knob"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deck-bottom-bar">
+          <div class="power-led" id="deck-led"></div>
+          <button id="spin-btn" class="cue-btn">🔥 LANCER LE DROP (100 <span class="taz-icon">▲</span>)</button>
+          <div class="bpm-screen" id="bpm-screen">150.0 BPM</div>
+        </div>
+      </div>
+
+      <div class="reveal-zone">
+        <div id="reveal-placeholder" class="reveal-placeholder">
+          <div class="pulse-ring"></div>
+          <p>Lance la platine pour révéler ton drop</p>
+        </div>
+        <div id="card-reveal" class="card-reveal hidden"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONGLET 2 : COLLECTION / POKÉDEX -->
+  <section id="tab-collection" class="tab-panel">
+    <div class="collection-toolbar">
+      <div class="collection-stats">
+        <h2>Ma Collection</h2>
+        <p id="unique-progress">Pokédex : 0 / 0 cartes uniques débloquées</p>
+      </div>
+      <div class="toolbar-actions">
+        <select id="category-filter" class="filter-select">
+          <option value="ALL">Toutes les catégories</option>
+          <option value="Staff">Staff</option>
+          <option value="Public">Public</option>
+          <option value="Objets">Objets</option>
+          <option value="Camping">Camping</option>
+          <option value="Festivals">Festivals</option>
+          <option value="Artistes">Artistes</option>
+          <option value="Stand">Stand</option>
+        </select>
+
+        <select id="rarity-filter" class="filter-select">
+          <option value="ALL">Toutes les raretés</option>
+          <option value="COMMON">Commune</option>
+          <option value="UNCOMMON">Peu Commune</option>
+          <option value="RARE">Rare</option>
+          <option value="EPIC">Épique</option>
+          <option value="LEGENDARY">Légendaire</option>
+          <option value="MYTHIC">Mythique</option>
+          <option value="PLATINUM">Platine VIP</option>
+          <option value="SECRET">HARD DROP</option>
+        </select>
+
+        <button id="reset-btn" class="reset-btn">🗑️ Réinitialiser</button>
+      </div>
+    </div>
+<!-- VITRINE DES BRACELETS VIP (SOUS-COLLECTIONS) -->
+<div class="vip-wristbands-box">
+  <h3>🎗️ Bracelets VIP des Sous-Collections (Récompense : +500 <span class="taz-icon">▲</span> par catégorie complète)</h3>
+  <div id="vip-wristbands-grid" class="vip-wristbands-grid"></div>
+</div>
+    <div id="inventory-grid" class="inventory-grid"></div>
+  </section>
+
+  <!-- ONGLET 3 : TABLE DE MIXAGE (DOUBLONS -> TAZ) -->
+  <section id="tab-mixer" class="tab-panel">
+    <div class="mixer-console">
+      <div class="mixer-header">
+        <h2>🎛️ TABLE DE MIXAGE // RECYCLAGE DE DOUBLONS</h2>
+        <p>Fusionne tes cartes en double pour extraire des <span class="taz-icon">▲</span> <strong>Taz</strong> (Tu gardes toujours 1 exemplaire dans ton Pokédex)</p>
+      </div>
+
+      <div class="mixer-deck">
+        <div class="mixer-stat-box">
+          <span class="stat-label">DOUBLONS DISPONIBLES</span>
+          <span id="mixer-dup-count" class="stat-value">0</span>
+        </div>
+
+        <div class="crossfader-zone">
+          <div class="crossfader-label">CROSSFADER DE FUSION</div>
+          <div class="crossfader-track">
+            <div id="crossfader-knob" class="crossfader-knob"></div>
+          </div>
+          <button id="mix-all-btn" class="mix-all-btn">
+            ⚡ MIXER TOUS LES DOUBLONS (+<span id="mix-all-gain">0</span> <span class="taz-icon">▲</span>)
+          </button>
+        </div>
+
+        <div class="mixer-stat-box">
+          <span class="stat-label">GAIN TOTAL ESTIMÉ</span>
+          <span class="stat-value taz-color"><span class="taz-icon">▲</span> <span id="mixer-total-taz">0</span></span>
+        </div>
+      </div>
+
+      <h3 class="mixer-subtitle">Tes doublons en stock</h3>
+      <div id="mixer-grid" class="inventory-grid"></div>
+    </div>
+  </section>
+
+  <!-- ONGLET 4 : TABLE DES PROBABILITÉS -->
+  <section id="tab-rates" class="tab-panel">
+    <div class="rates-card">
+      <h2>📊 Probabilités d'obtention (RNG Officiel)</h2>
+      <p class="rates-sub">Chaque rotation de platine tire un nombre précis entre 0.00% et 100.00%</p>
+      <div id="rates-list" class="rates-list"></div>
+    </div>
+  </section>
+  <!-- ONGLET 5 : MON FESTIVAL / MAINSTAGE -->
+  <section id="tab-stage" class="tab-panel">
+    <div class="stage-dashboard">
+      <div class="stage-header">
+        <div>
+          <h2>🎪 MON FESTIVAL // MAINSTAGE LINE-UP</h2>
+          <p>Équipe tes meilleures cartes pour faire monter les décibels et générer des <span class="taz-icon">▲</span> <strong>Taz</strong> en continu.</p>
+        </div>
+
+        <div class="stage-bank">
+          <div class="bank-info">
+            <span class="stat-label">PRODUCTION</span>
+            <span class="taz-color">+<span id="stage-rate">0</span> <span class="taz-icon">▲</span> / h</span>
+          </div>
+          <div class="bank-info">
+            <span class="stat-label">PRODUCTION</span>
+            <span class="taz-color">+<span id="stage-rate">0</span> <span class="taz-icon">▲</span> / 5s</span>
+          </div>
+          <button id="claim-stage-btn" class="claim-btn" disabled>
+            💰 Encaisser (<span id="stage-pending-taz">0</span> <span class="taz-icon">▲</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Les 4 emplacements du Festival -->
+      <!-- PLAN 2D INTERACTIF DU FESTIVAL + INSPECTEUR DE ZONE -->
+      <div class="festival-map-layout">
+        <!-- Carte Blueprint à gauche -->
+        <div class="festival-blueprint">
+          <div class="blueprint-stage-waves"></div>
+          <div class="blueprint-label">PLAN OFFICIEL // RADAR DES ZONES</div>
+          <div id="map-nodes-container" class="map-nodes-container"></div>
+        </div>
+
+        <!-- Panneau d'inspection de la zone sélectionnée à droite -->
+        <div class="zone-inspector">
+          <div class="inspector-header">
+            <h3 id="inspector-title">🎧 ARTISTES</h3>
+            <span id="inspector-yield" class="inspector-yield">+0 ▲ / h</span>
+          </div>
+          <div id="stage-slots-grid" class="inspector-slots"></div>
+        </div>
+      </div>
+  </section>
+</main>
+<script src="script.js" type="module"></script>
